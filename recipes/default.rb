@@ -15,9 +15,10 @@ if node[:s3fs][:patches]
 		remote_file ::File.join(node[:s3fs][:install_tmp_dir],patch) do
 			source node[:s3fs][:patches][patch][:source_url]
 		end
+		patch_file = ::File.join(node[:s3fs][:install_tmp_dir],patch)
 		bash "apply-patch" do
 			cwd ::File.join(node[:s3fs][:install_tmp_dir],"s3fs-#{node[:s3fs][:version]}")
-			code "patch -p#{node[:s3fs][:patches][patch][:level]} <#{::File.join(node[:s3fs][:install_tmp_dir],patch)}"
+			code "patch -p#{node[:s3fs][:patches][patch][:level]} <#{patch_file}; rm #{patch_file}"
 		end
 	end
 end
@@ -30,6 +31,6 @@ make
 make install
 cd /
 rm -rf #{::File.join(node[:s3fs][:install_tmp_dir],"s3fs-#{node[:s3fs][:version]}")}
-rm ::File.join(node[:s3fs][:install_tmp_dir],node[:s3fs][:archive])
+rm #{::File.join(node[:s3fs][:install_tmp_dir],node[:s3fs][:archive])}
 EOF
 end
