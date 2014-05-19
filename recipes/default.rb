@@ -10,7 +10,7 @@ tar zxvf #{node[:s3fs][:archive]}
 EOF
 end
 
-if node[:s3fs][:patches].keys
+if node[:s3fs][:patches]
 	node[:s3fs][:patches].keys.sort.each do |patch|
 		remote_file ::File.join(node[:s3fs][:install_tmp_dir],patch) do
 			source node[:s3fs][:patches][patch][:source_url]
