@@ -6,7 +6,6 @@ end
 bash "extract-archive" do
 	cwd node[:s3fs][:install_tmp_dir]
 	code <<-EOF
-echo '#{node[:s3fs][:archive]}' >>/tmp/debug
 tar zxvf #{node[:s3fs][:archive]}
 EOF
 end
@@ -29,5 +28,8 @@ bash "build-and-install" do
 ./configure
 make
 make install
+cd /
+rm -rf #{::File.join(node[:s3fs][:install_tmp_dir],"s3fs-#{node[:s3fs][:version]}")}
+rm ::File.join(node[:s3fs][:install_tmp_dir],node[:s3fs][:archive])
 EOF
 end
