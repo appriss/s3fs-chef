@@ -4,3 +4,5 @@ default[:s3fs][:version] = "1.7.1"
 default[:s3fs][:archive] = "s3fs-#{node[:s3fs][:version]}.tar.gz"
 default[:s3fs][:url] = "https://s3fs.googlecode.com/files/#{node[:s3fs][:archive]}"
 default[:s3fs][:patches] = nil
+default[:s3fs][:access_key] = nil
+default[:s3fs][:secret] = nil

@@ -34,3 +34,13 @@ rm -rf #{::File.join(node[:s3fs][:install_tmp_dir],"s3fs-#{node[:s3fs][:version]
 rm #{::File.join(node[:s3fs][:install_tmp_dir],node[:s3fs][:archive])}
 EOF
 end
+
+if node[:s3fs][:access_key]
+	file "/etc/passwd-s3fs" do
+		content "#{node[:s3fs][:access_key]}:#{node[:s3fs][:secret]}\n"
+		mode 0600
+		action :create
+		owner "root"
+		group "root"
+	end
+end
