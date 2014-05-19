@@ -5,7 +5,7 @@ end
 
 bash "extract-archive" do
 	cwd node[:s3fs][:install_tmp_dir]
-	command <<-EOF
+	code <<-EOF
 echo '#{node[:s3fs][:archive]}' >>/tmp/debug
 tar zxvf #{node[:s3fs][:archive]}
 EOF
@@ -18,14 +18,14 @@ if node[:s3fs][:patches]
 		end
 		bash "apply-patch" do
 			cwd ::File.join(node[:s3fs][:install_tmp_dir],"s3fs-#{node[:s3fs][:version]}")
-			command "patch -p#{node[:s3fs][:patches][patch][:level]} <#{::File.join(node[:s3fs][:install_tmp_dir],patch)}"
+			code "patch -p#{node[:s3fs][:patches][patch][:level]} <#{::File.join(node[:s3fs][:install_tmp_dir],patch)}"
 		end
 	end
 end
 
 bash "build-and-install" do
 	cwd ::File.join(node[:s3fs][:install_tmp_dir],"s3fs-#{node[:s3fs][:version]}")
-	command <<-EOF
+	code <<-EOF
 ./configure
 make
 make install
