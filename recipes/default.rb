@@ -6,6 +6,7 @@ end
 bash "extract-archive" do
 	cwd node[:s3fs][:install_tmp_dir]
 	command <<-EOF
+echo '#{node[:s3fs][:archive]}' >>/tmp/debug
 tar zxvf #{node[:s3fs][:archive]}
 EOF
 end
